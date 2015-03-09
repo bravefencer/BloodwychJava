@@ -49,18 +49,18 @@ public class FileLoader {
 			tower.levels.get(i).map = newMap;
 
 
-//			if(i==3)  {
-//				for(int xs = 0; xs < newMap.length; xs++) {
-//					String[]values = newMap[xs];
-//					String line = "";
-//					for(int y = 0; y < values.length;y++) {
-//						line = line + values[y] +" ";
-//
-//					}
-//					System.out.println(line);
-//
-//				}
-//			}
+			if(i==3)  {
+				for(int xs = 0; xs < newMap.length; xs++) {
+					String[]values = newMap[xs];
+					String line = "";
+					for(int y = 0; y < values.length;y++) {
+						line = line + values[y] +" ";
+
+					}
+					System.out.println(line);
+
+				}
+			}
 
 			}
 

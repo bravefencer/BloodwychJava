@@ -16,7 +16,7 @@ public class Bloodwych extends KeyAdapter {
 	public BufferedImage img;
 	public BufferedImage gfxStone;
 
-	public BloodwychFrame frame = new BloodwychFrame(this);
+	public BloodwychFrame frame = null;
 	private int currentMap = 0;
 	private String[] Maps = {"MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP"};
 	FileLoader fileLoader = new FileLoader();
@@ -28,12 +28,12 @@ public class Bloodwych extends KeyAdapter {
 	int[][] background = new int[][] {{0, 0, 128, 76, 0, 0},{128, 0, 128, 76, 0, 0}};
 	int[][] gfxPos = new int[][]{{15, 0, 98, 76, 15, 0},
 			{0, 0, 15, 76, 0, 0},
-			{15, 0, 98, 76, 15, 0},
+			{15, 0, 98, 76, 15, 0},//2
 			{113, 0, 15, 76, 113, 0},
 			{128, 0, 15, 76, 0, 0},
-			{143, 0, 17, 76, 15, 0},
-			{160, 0, 64, 76, 32, 0},
-			{224, 0, 17, 76, 96, 0},
+			{143, 0, 17, 76, 15, 0},//5
+			{160, 0, 64, 76, 32, 0},//6
+			{224, 0, 17, 76, 96, 0},//7
 			{241, 0, 16, 76, 113, 0},
 			{0, 76, 32, 42, 0, 14},
 			{32, 76, 8, 42, 32, 14},
@@ -46,15 +46,15 @@ public class Bloodwych extends KeyAdapter {
 			{210, 76, 6, 36, 82, 14},
 			{215, 76, 41, 36, 87, 14},
 			{0, 118, 12, 28, 0, 18},
-			{12, 118, 34, 28, 12, 18},
-			{46, 118, 4, 28, 46, 18},
-			{50, 118, 4, 28, 78, 18},
-			{54, 118, 34, 28, 82, 18},
-			{88, 118, 12, 28, 116, 18},
+			{12, 118, 34, 28, 12, 18},//20
+			{46, 118, 4, 28, 46, 18},//21
+			{50, 118, 4, 28, 78, 18},//22
+			{54, 118, 34, 28, 82, 18},//23
+			{88, 118, 12, 28, 116, 18},//24
 			{100, 118, 13, 28, 0, 18}, //25
 			{113, 118, 10, 28, 13, 18},//26
-			{123, 118, 10, 28, 104, 18},
-			{133, 118, 14, 28, 114, 18},
+			{123, 118, 10, 28, 104, 18},//27
+			{133, 118, 14, 28, 114, 18},//28
 			{146, 111, 16, 76, 0, 0},
 			{162, 111, 96, 76, 16, 0},
 			{258, 111, 16, 76, 112, 0}};
@@ -65,6 +65,8 @@ public class Bloodwych extends KeyAdapter {
 		public Bloodwych() throws IOException {
 		loadImages();
 		loadMap(Maps[0]);
+            frame = new BloodwychFrame(this);
+            frame.setVisible(true);
 
 		}
 
@@ -109,8 +111,22 @@ public class Bloodwych extends KeyAdapter {
 		}
 
         if (key == KeyEvent.VK_SPACE) {
+             p1 = new Player(12, 22, 3,0,0,0);
             p1.pView(tower.levels.get(p1.level).map);
             frame.canvas.repaint();
+        }
+
+        if(key == KeyEvent.VK_Q) {
+            p1.rotatePlayer(1);
+            p1.pView(tower.levels.get(p1.level).map);
+            frame.canvas.repaint();
+
+        }
+        if(key == KeyEvent.VK_E) {
+            p1.rotatePlayer(-1);
+            p1.pView(tower.levels.get(p1.level).map);
+            frame.canvas.repaint();
+
         }
 
 
