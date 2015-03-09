@@ -20,7 +20,7 @@ public class GraphicsHelper {
 
 		for (int x = 0; x < 19; x++) {
 
-			int BlockType = Integer.parseInt(p.view[x].substring(3, 4));
+  			int BlockType = Integer.parseInt(p.view[x].substring(3, 4));
 
 			if (BlockType == 2) {
 				//drawWoodenObject(p,x);
@@ -193,13 +193,11 @@ public class GraphicsHelper {
 
 	}
 
-	private void drawImage(Graphics g, BufferedImage image, int scale) {
 
-	}
 
 	public void drawImage(Graphics g, BufferedImage image, int[] pos, Player p, int scale) {
 
-		Graphics2D g2d = (Graphics2D) g.create();
+		Graphics2D g2d = (Graphics2D) g;
 
 
 		if(image == null){
@@ -207,10 +205,10 @@ public class GraphicsHelper {
 		}
 
 		g2d.drawImage(image,
-				pos[4],
+				pos[4] * scale,
 				pos[5] * scale,
-				pos[2] * scale,
-				pos[3] * scale,
+                (pos[4]+pos[2]) * scale,
+                (pos[5]+pos[3]) * scale,
 				pos[0],
 				pos[1],
 				pos[0] + pos[2],

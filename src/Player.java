@@ -23,6 +23,7 @@ public class Player {
 
 	}
 
+
 	public void moveForward() {
 		int xo = 0;
 		int yo = 0;

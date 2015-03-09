@@ -51,8 +51,8 @@ public class Bloodwych extends KeyAdapter {
 			{50, 118, 4, 28, 78, 18},
 			{54, 118, 34, 28, 82, 18},
 			{88, 118, 12, 28, 116, 18},
-			{100, 118, 13, 28, 0, 18},
-			{113, 118, 10, 28, 13, 18},
+			{100, 118, 13, 28, 0, 18}, //25
+			{113, 118, 10, 28, 13, 18},//26
 			{123, 118, 10, 28, 104, 18},
 			{133, 118, 14, 28, 114, 18},
 			{146, 111, 16, 76, 0, 0},
@@ -107,6 +107,11 @@ public class Bloodwych extends KeyAdapter {
 			p1.pView(tower.levels.get(p1.level).map);
 			frame.canvas.repaint();
 		}
+
+        if (key == KeyEvent.VK_SPACE) {
+            p1.pView(tower.levels.get(p1.level).map);
+            frame.canvas.repaint();
+        }
 
 
 
