@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 /**
  * Created by ERTE005 on 09.03.2015.
@@ -21,31 +20,22 @@ public class BloodwychCanvas extends JComponent{
 
 		clearCanvas(g);
 		drawBackground(g);
+		drawMap(g);
 
+	}
 
-
+	private void drawMap(Graphics g) {
+		bloodwych.graphicsHelper.drawPlayersView(bloodwych.p1, g);
 	}
 
 
 	private void drawBackground(Graphics g) {
 		int[] background = bloodwych.background[bloodwych.b];
-		drawImage(g, background);
+		bloodwych.graphicsHelper.drawImage(g, bloodwych.img,background,bloodwych.p1,bloodwych.scale);
 
 	}
 
-	private void drawImage(Graphics g, int[] pos) {
-		g.drawImage(bloodwych.img,
-				pos[4],
-				pos[5]*bloodwych.scale,
-				pos[2]*bloodwych.scale,
-				pos[3]*bloodwych.scale,
-				pos[0],
-				pos[1],
-				pos[0]+pos[2],
-				pos[1]+pos[3],
-				Color.black,
-				this);
-	}
+
 
 	private void clearCanvas(Graphics g) {
 		g.setColor(Color.BLACK);
