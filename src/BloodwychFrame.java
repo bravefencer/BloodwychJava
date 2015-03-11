@@ -15,6 +15,7 @@ public class BloodwychFrame extends JFrame {
 		canvas = new BloodwychCanvas(bloodwych);
 		this.setContentPane(canvas);
 		this.pack();
+		this.addKeyListener(bloodwych);
 		this.setVisible(true);
 
 	}

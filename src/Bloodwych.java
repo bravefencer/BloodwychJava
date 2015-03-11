@@ -1,4 +1,7 @@
 import javax.imageio.ImageIO;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +12,7 @@ import java.nio.file.Paths;
 /**
  * Created by ERTE005 on 09.03.2015.
  */
-public class Bloodwych {
+public class Bloodwych extends KeyAdapter {
 	public BufferedImage img;
 
 	private BufferedImage gfxStone;
@@ -20,6 +23,8 @@ public class Bloodwych {
 	Tower tower = new Tower();
 	int b = 0;
 	int scale = 3;
+	Player p1 = new Player(12, 22, 3,0,0,0);
+	Player p2 = new Player(14,22,3,0,0,350);
 	int[][] background = new int[][] {{0, 0, 128, 76, 0, 0},{128, 0, 128, 76, 0, 0}};
 	int[][] spriteSheetArray = new int[][]{{15, 0, 98, 76, 15, 0}, {0, 0, 15, 76, 0, 0}, {15, 0, 98, 76, 15, 0},
 			{113, 0, 15, 76, 113, 0}, {128, 0, 15, 76, 0, 0}, {143, 0, 17, 76, 15, 0}, {160, 0, 64, 76, 32, 0}, {224, 0, 17, 76, 96, 0}, {241, 0, 16, 76, 113, 0},
@@ -57,6 +62,27 @@ public class Bloodwych {
 	public static void main(String args[]) throws IOException {
 
 		new Bloodwych();
+
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+
+		if (key == KeyEvent.VK_W) {
+			p1.moveForward();
+			p1.pView(tower.levels.get(p1.level).map);
+			frame.canvas.repaint();
+		}
+
+		if (key == KeyEvent.VK_S) {
+			p1.moveBackward();
+			p1.pView(tower.levels.get(p1.level).map);
+			frame.canvas.repaint();
+		}
+
+
 
 	}
 

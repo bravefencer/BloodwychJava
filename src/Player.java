@@ -3,13 +3,13 @@
  */
 public class Player {
 
-	private int x;
-	private int y;
-	private int level;
-	private int rotation;
-	private int portalX;
-	private int portalY;
-	String[] view;
+	public int x;
+	public int y;
+	public int level;
+	public int rotation;
+	public int portalX;
+	public int portalY;
+	public String[] view;
 
 	public Player(int posX, int posY, int level, int rotation, int portalX, int portalY) {
 
