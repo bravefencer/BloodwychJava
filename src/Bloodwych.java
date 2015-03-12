@@ -16,6 +16,7 @@ public class Bloodwych extends KeyAdapter {
 	public BufferedImage img;
 	public BufferedImage gfxStone;
 	public BufferedImage[] gfxWooden = new BufferedImage[3];
+	public BufferedImage[] gfxMisc = new BufferedImage[2];
 
 	public BloodwychFrame frame = null;
 	private int currentMap = 0;
@@ -84,7 +85,8 @@ public class Bloodwych extends KeyAdapter {
 		gfxWooden[0] = ImageIO.read(this.getClass().getResource("/images/screen2.png"));
 		gfxWooden[1] = ImageIO.read(this.getClass().getResource("/images/screen3.png"));
 		gfxWooden[2] = ImageIO.read(this.getClass().getResource("/images/screen4.png"));
-
+		gfxMisc[0] = ImageIO.read(this.getClass().getResource("/images/screen5.png"));
+		gfxMisc[1] = ImageIO.read(this.getClass().getResource("/images/screen11.png"));
 
 
 

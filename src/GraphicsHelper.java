@@ -15,173 +15,227 @@ public class GraphicsHelper {
 
 	}
 
+	// wall direction is  the relative direction to player. )
+	public int getWallDirection(int d, int s) {
+		// d = player direction
+		// s = screen gfx position
+
+		//I should be able to use the below in an array to work out all directions
+		//current plus direction = wall face i.e.
+		//If a wall is currently North which is a 0 + player direction. Say Player is facing East = 1
+		// 0 + 1 = 1 (North Wall becomes East)
+		int[] Wall = new int [32];
+		Wall[0] = 0;
+		Wall[1] = 1;
+		Wall[2] = 2;
+		Wall[3] = 3;
+		Wall[4] = 2;
+		Wall[5] = 1;
+		Wall[6] = 2;
+		Wall[7] = 3;
+		Wall[8] = 2;
+		Wall[9] = 2;
+		Wall[10] = 1;
+		Wall[11] = 2;
+		Wall[12] = 3;
+		Wall[13] = 2;
+		Wall[14] = 2;
+		Wall[15] = 1;
+		Wall[16] = 2;
+		Wall[17] = 3;
+		Wall[18] = 2;
+		Wall[19] = 1;
+		Wall[20] = 2;
+		Wall[21] = 1;
+		Wall[22] = 3;
+		Wall[23] = 2;
+		Wall[24] = 3;
+		Wall[25] = 2;
+		Wall[26] = 1;
+		Wall[27] = 3;
+		Wall[28] = 2;
+		Wall[29] = 3;
+		Wall[30] = 0;
+		Wall[31] = 1;
+
+		Wall[s] = Wall[s] + d;
+
+		if (Wall[s] > 3) {
+			Wall[s] = (Wall[s] - 3) -1;
+		}
+
+
+		return Wall[s];
+
+
+	}
+
 
 
 	public void drawPlayersView(Player p, Graphics g) {
 
 		for (int x = 0; x < 19; x++) {
 
-  			int BlockType = Integer.parseInt(p.view[x].substring(3, 4));
+			int BlockType = Integer.parseInt(p.view[x].substring(3, 4));
 
 			if (BlockType == 2) {
-				drawWoodenObject(g,p,x);
+				drawWoodenObject(g, p, x);
 			} else {
 
 				switch (x) {
 					case 0: {
-						drawImage(g, getImage(p.view[x], 0, 28, p), bloodwych.gfxPos[28], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 27, p), bloodwych.gfxPos[27], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 28), 28, p), bloodwych.gfxPos[28], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 27), 27, p), bloodwych.gfxPos[27], p, bloodwych.scale);
 						break;
 					}
-					case 1:{
-						drawImage(g, getImage(p.view[x], 0, 26, p), bloodwych.gfxPos[26], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 25, p), bloodwych.gfxPos[25], p , bloodwych.scale);
+					case 1: {
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 26), 26, p), bloodwych.gfxPos[26], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 25), 25, p), bloodwych.gfxPos[25], p, bloodwych.scale);
 						break;
 					}
-					case 2:{
-						drawImage(g, getImage(p.view[x], 0, 27, p), bloodwych.gfxPos[27], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 23, p), bloodwych.gfxPos[23], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 22, p), bloodwych.gfxPos[22], p , bloodwych.scale);
+					case 2: {
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 27), 27, p), bloodwych.gfxPos[27], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 23), 23, p), bloodwych.gfxPos[23], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 22), 22, p), bloodwych.gfxPos[22], p, bloodwych.scale);
 
 						break;
 					}
-					case 3:{
+					case 3: {
 
-						drawImage(g, getImage(p.view[x], 0, 26, p), bloodwych.gfxPos[26], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 21, p), bloodwych.gfxPos[21], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 20, p), bloodwych.gfxPos[20], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 26), 26, p), bloodwych.gfxPos[26], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 21), 21, p), bloodwych.gfxPos[21], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 20), 20, p), bloodwych.gfxPos[20], p, bloodwych.scale);
 
 						break;
 
 					}
-					case 4:{
+					case 4: {
 
-						drawImage(g, getImage(p.view[x], 0, 22, p), bloodwych.gfxPos[22], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 21, p), bloodwych.gfxPos[21], p , bloodwych.scale);
-						drawImage(g, getImage(p.view[x], 0, 16, p), bloodwych.gfxPos[16], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 22), 22, p), bloodwych.gfxPos[22], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 21), 21, p), bloodwych.gfxPos[21], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 26), 16, p), bloodwych.gfxPos[16], p, bloodwych.scale);
 
 						break;
 					}
-					case 5:{
-						drawImage(g, getImage(p.view[x], 0, 24, p), bloodwych.gfxPos[24], p , bloodwych.scale);
+					case 5: {
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 24), 24, p), bloodwych.gfxPos[24], p, bloodwych.scale);
 						break;
 					}
-					case 6:{
-						drawImage(g, getImage(p.view[x], 0, 19, p), bloodwych.gfxPos[19], p , bloodwych.scale);
+					case 6: {
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 19), 19, p), bloodwych.gfxPos[19], p, bloodwych.scale);
 						break;
 
 					}
-					case 7:{
+					case 7: {
 						if (BlockType == 1 || BlockType == 2) {
 
-							drawImage(g, getImage(p.view[x], 0, 23, p), bloodwych.gfxPos[23], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 24, p), bloodwych.gfxPos[24], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 17, p), bloodwych.gfxPos[17], p , bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 23), 23, p), bloodwych.gfxPos[23], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 23), 24, p), bloodwych.gfxPos[24], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 27), 17, p), bloodwych.gfxPos[17], p, bloodwych.scale);
 
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 18, p), bloodwych.gfxPos[18], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 18), 18, p), bloodwych.gfxPos[18], p, bloodwych.scale);
 						break;
 
 					}
-					case 8:{
+					case 8: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 20, p), bloodwych.gfxPos[20], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 19, p), bloodwych.gfxPos[19], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 15, p), bloodwych.gfxPos[15], p , bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 20), 20, p), bloodwych.gfxPos[20], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 19), 19, p), bloodwych.gfxPos[19], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 15), 15, p), bloodwych.gfxPos[15], p, bloodwych.scale);
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 14, p), bloodwych.gfxPos[14], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 14), 14, p), bloodwych.gfxPos[14], p, bloodwych.scale);
 						break;
 					}
-					case 9:{
+					case 9: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 17, p), bloodwych.gfxPos[17], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 16, p), bloodwych.gfxPos[16], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 15, p), bloodwych.gfxPos[15], p , bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 17), 17, p), bloodwych.gfxPos[17], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 16), 16, p), bloodwych.gfxPos[16], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 15), 15, p), bloodwych.gfxPos[15], p, bloodwych.scale);
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 11, p), bloodwych.gfxPos[11], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 11), 11, p), bloodwych.gfxPos[11], p, bloodwych.scale);
 						break;
 					}
-					case 10:{
+					case 10: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 18, p), bloodwych.gfxPos[18], p , bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 12, p), bloodwych.gfxPos[12], p , bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 18), 18, p), bloodwych.gfxPos[18], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 12), 12, p), bloodwych.gfxPos[12], p, bloodwych.scale);
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 13, p), bloodwych.gfxPos[13], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 13), 13, p), bloodwych.gfxPos[13], p, bloodwych.scale);
 						break;
 					}
-					case 11:{
+					case 11: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 14, p), bloodwych.gfxPos[14], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 10, p), bloodwych.gfxPos[10], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 14), 14, p), bloodwych.gfxPos[14], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 10), 10, p), bloodwych.gfxPos[10], p, bloodwych.scale);
 						}
-						drawImage(g, getImage(p.view[x], 0, 9, p), bloodwych.gfxPos[9], p , bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 9), 9, p), bloodwych.gfxPos[9], p, bloodwych.scale);
 						break;
 					}
-					case 12:{
+					case 12: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 12, p), bloodwych.gfxPos[12], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 11, p), bloodwych.gfxPos[11], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 10, p), bloodwych.gfxPos[10], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 12), 12, p), bloodwych.gfxPos[12], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 11), 11, p), bloodwych.gfxPos[11], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 10), 10, p), bloodwych.gfxPos[10], p, bloodwych.scale);
 
-
-
-						}
-						drawImage(g, getImage(p.view[x], 0, 6, p), bloodwych.gfxPos[6], p, bloodwych.scale);
-						break;
-					}
-					case 13:{
-						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 13, p), bloodwych.gfxPos[13], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 7, p), bloodwych.gfxPos[7], p, bloodwych.scale);
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 8, p), bloodwych.gfxPos[8], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 6), 6, p), bloodwych.gfxPos[6], p, bloodwych.scale);
 						break;
-
 					}
-					case 14:{
+					case 13: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 9, p), bloodwych.gfxPos[9], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 5, p), bloodwych.gfxPos[5], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 13), 13, p), bloodwych.gfxPos[13], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 7), 7, p), bloodwych.gfxPos[7], p, bloodwych.scale);
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 4, p), bloodwych.gfxPos[4], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 8), 8, p), bloodwych.gfxPos[8], p, bloodwych.scale);
 						break;
+
 					}
-					case 15:{
+					case 14: {
 						if (BlockType == 1 || BlockType == 2) {
-							drawImage(g, getImage(p.view[x], 0, 6, p), bloodwych.gfxPos[6], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 7, p), bloodwych.gfxPos[7], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 5, p), bloodwych.gfxPos[5], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 9), 9, p), bloodwych.gfxPos[9], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 5), 5, p), bloodwych.gfxPos[5], p, bloodwych.scale);
 
 						}
-						drawImage(g, getImage(p.view[x], 0, 2, p), bloodwych.gfxPos[2], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 4), 4, p), bloodwych.gfxPos[4], p, bloodwych.scale);
 						break;
 					}
-					case 16:{
-						drawImage(g, getImage(p.view[x], 0, 3, p), bloodwych.gfxPos[3], p, bloodwych.scale);
+					case 15: {
+						if (BlockType == 1 || BlockType == 2) {
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 6), 6, p), bloodwych.gfxPos[6], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 7), 7, p), bloodwych.gfxPos[7], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 5), 5, p), bloodwych.gfxPos[5], p, bloodwych.scale);
+
+						}
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 2), 2, p), bloodwych.gfxPos[2], p, bloodwych.scale);
 						break;
 					}
-					case 17:{
-						drawImage(g, getImage(p.view[x], 0, 1, p), bloodwych.gfxPos[1], p, bloodwych.scale);
+					case 16: {
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 3), 3, p), bloodwych.gfxPos[3], p, bloodwych.scale);
 						break;
 					}
-					case 18:{
+					case 17: {
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 1), 1, p), bloodwych.gfxPos[1], p, bloodwych.scale);
+						break;
+					}
+					case 18: {
 						if (BlockType == 5) {
 							//drawDoorFrame(p);
-						}
-						else {
-							drawImage(g, getImage(p.view[x], 0, 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);
-							drawImage(g, getImage(p.view[x], 0, 30, p), bloodwych.gfxPos[30], p, bloodwych.scale);
+						} else {
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 31), 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 29), 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 30), 30, p), bloodwych.gfxPos[30], p, bloodwych.scale);
 
 							break;
 
-						};
+						}
+						;
 					}
 
 
@@ -343,7 +397,7 @@ public class GraphicsHelper {
 	}
 
 
-	private BufferedImage getImage(String hex, int d, int pos, Player p){
+	private BufferedImage getImage(Graphics g, String hex, int d, int pos, Player p){
 
 		// Hex = Bloodwych Hex Code
 		// d = direction of required wall (North,East,South,West)
@@ -358,7 +412,9 @@ public class GraphicsHelper {
 
 		switch (CC){
 			case 0:return null;
-			case 1:return getStoneWall(hex,d,pos,p);
+			case 1:return getStoneWall(g, hex,d,pos,p);
+			case 2:return null;
+			case 3: return getMiscObj(BB);
 			default:return null;
 		}
 
@@ -367,11 +423,68 @@ public class GraphicsHelper {
 
 	}
 
-	private BufferedImage getStoneWall(String hex, int d, int pos, Player p) {
+	private BufferedImage getMiscObj(int BB) {
+
+		switch (BB) {
+			case 0: //Return a Bed
+				return bloodwych.gfxMisc[1];
+			case 1: //Return a Piller
+				return bloodwych.gfxMisc[0];
+			default: return bloodwych.gfxMisc[0];
+		}
+
+	}
+
+	private BufferedImage getStoneWall(Graphics g, String hex, int d, int pos, Player p) {
+
+		int AA = Integer.parseInt(hex.substring(0, 1), 16);
+		int BB = Integer.parseInt(hex.substring(1, 2), 16);
+		int CC = Integer.parseInt(hex.substring(2, 3), 16);
+		if (CC == 0) {
+			return bloodwych.gfxStone;
+		}
+
+		drawImage(g, bloodwych.gfxStone, bloodwych.gfxPos[pos],p, bloodwych.scale);
+
+		switch (CC) {
+
+			case 8: {
+				if (d == 0) {
+					return getWallDeco();
+				} break;
+			} //North Wall has Deco
+			case 9: {
+				if (d == 1) {
+					return getWallDeco();
+				} break;
+			} //East Wall has Deco
+			case 10: {
+				if (d == 2) {
+					return getWallDeco();
+				} break;
+			} //South Wall has Deco
+			case 11: {
+				if (d == 3) {
+					return getWallDeco();
+				} break;
+			} //West Wall has Deco
+			default: {
+
+				return bloodwych.gfxStone;
+			}
+
+
+		}
+
+
 		return bloodwych.gfxStone;
 	}
 
-	;
+	public BufferedImage getWallDeco() {
+		return null;
+	}
+
+
 
 
 }
