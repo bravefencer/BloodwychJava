@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 /**
  * Created by ERTE005 on 11.03.2015.
@@ -23,7 +24,7 @@ public class GraphicsHelper {
   			int BlockType = Integer.parseInt(p.view[x].substring(3, 4));
 
 			if (BlockType == 2) {
-				//drawWoodenObject(p,x);
+				drawWoodenObject(g,p,x);
 			} else {
 
 				switch (x) {
@@ -193,6 +194,130 @@ public class GraphicsHelper {
 
 	}
 
+	private void drawWoodenObject(Graphics g,  Player p, int x) {
+		// x = Current Block being drawn
+
+		//We create an array of all the sides for each 18 blocks
+		//because wooden walls have 4 sides me need to loop though them all
+		//and return the correct wall depending on the players rotation
+
+
+		//blocksides = Jeder Eintrag ist verweis auf SPritesheet position für jede seite des blocks pro view field des Spielers(Nordwand,Ostwand,Südwand,Westwand)
+		// es werden nur die Seiten des Block gerendert, welche relevant für die aktuelle position sind.
+		int[][] BlockSides = new int[19][];
+
+		BlockSides[0] = new int[] {-1,-1,28,27};
+		BlockSides[1] = new int[] {-1,26,25,-1};
+		BlockSides[2] = new int[] {-1,27,23,22};
+		BlockSides[3] = new int[] {-1,21,20,26};
+		BlockSides[4] = new int[] {-1,22,16,21};
+		BlockSides[5] = new int[] {28,-1,-1,24};
+		BlockSides[6] = new int[] {25,19,-1,-1};
+		BlockSides[7] = new int[] {23,24,18,17};
+		BlockSides[8] = new int[] {20,15,14,19};
+		BlockSides[9] = new int[] {16,17,11,15};
+		BlockSides[10] = new int[] {18,-1,13,12};
+		BlockSides[11] = new int[] {14,10,9,-1};
+		BlockSides[12] = new int[] {11,12,6,10};
+		BlockSides[13] = new int[] {13,-1,8,7};
+		BlockSides[14] = new int[] {9,5,4,-1};
+		BlockSides[15] = new int[] {6,7,2,5};
+		BlockSides[16] = new int[] {8,-1,-1,3};
+		BlockSides[17] = new int[] {4,1,-1,-1};
+		BlockSides[18] = new int[] {2,3,-1,1};
+
+		//die ersten beiden Stellen(8bit)  beschreiben den typ der Wand für jede seite des blocks (4bit = 1 HEX)
+		String b = hexToBinary(p.view[x].substring(0,2));
+
+		//bsp: 11 00 01 11 (north=11, east=00 (keine Wand),South = 01, west = 11
+		String[] s = new String[4];
+		s[0] = b.substring(6,8); //North Face
+		s[1] = b.substring(4,6); //East Face
+		s[2] = b.substring(2,4); //South Face
+		s[3] = b.substring(0,2); //West Face
+
+		switch (p.rotation){
+			case 0:{
+				if (BlockSides[x][0] > -1){drawImage(g, bin2type(s[0]),bloodwych.gfxPos[BlockSides[x][0]],p,bloodwych.scale); } //North (back)
+				if (BlockSides[x][1] > -1){drawImage(g, bin2type(s[1]), bloodwych.gfxPos[BlockSides[x][1]], p, bloodwych.scale);} //West
+				if (BlockSides[x][3] > -1){drawImage(g, bin2type(s[3]), bloodwych.gfxPos[BlockSides[x][3]], p, bloodwych.scale);} //East
+				if (BlockSides[x][2] > -1){drawImage(g, bin2type(s[2]), bloodwych.gfxPos[BlockSides[x][2]], p, bloodwych.scale);} //South (front)
+			};break;
+			case 1:{
+				if (BlockSides[x][0] > -1){drawImage(g, bin2type(s[1]), bloodwych.gfxPos[BlockSides[x][0]], p, bloodwych.scale);}
+				if (BlockSides[x][1] > -1){drawImage(g, bin2type(s[2]), bloodwych.gfxPos[BlockSides[x][1]], p, bloodwych.scale);}
+				if (BlockSides[x][3] > -1){drawImage(g, bin2type(s[0]), bloodwych.gfxPos[BlockSides[x][3]], p, bloodwych.scale);}
+				if (BlockSides[x][2] > -1){drawImage(g, bin2type(s[3]), bloodwych.gfxPos[BlockSides[x][2]], p, bloodwych.scale);}
+			};break;
+			case 2:{ //draw at north wall position as south wall, east wall position as west wall (exchange sides of block respect to view direction)
+				if (BlockSides[x][0] > -1){drawImage(g, bin2type(s[2]), bloodwych.gfxPos[BlockSides[x][0]], p, bloodwych.scale);} //south
+				if (BlockSides[x][1] > -1){drawImage(g, bin2type(s[3]), bloodwych.gfxPos[BlockSides[x][1]], p, bloodwych.scale);} //east
+				if (BlockSides[x][3] > -1){drawImage(g, bin2type(s[1]), bloodwych.gfxPos[BlockSides[x][3]], p, bloodwych.scale);} //west
+				if (BlockSides[x][2] > -1){drawImage(g, bin2type(s[0]), bloodwych.gfxPos[BlockSides[x][2]], p, bloodwych.scale);} //north
+			};break;
+			case 3:{
+				if (BlockSides[x][0] > -1){drawImage(g, bin2type(s[3]), bloodwych.gfxPos[BlockSides[x][0]], p, bloodwych.scale);}
+				if (BlockSides[x][1] > -1){drawImage(g, bin2type(s[0]), bloodwych.gfxPos[BlockSides[x][1]], p, bloodwych.scale);}
+				if (BlockSides[x][3] > -1){drawImage(g, bin2type(s[2]), bloodwych.gfxPos[BlockSides[x][3]], p, bloodwych.scale);}
+				if (BlockSides[x][2] > -1){drawImage(g, bin2type(s[1]), bloodwych.gfxPos[BlockSides[x][2]], p, bloodwych.scale);}
+			};break;
+		}
+
+	}
+
+	private BufferedImage bin2type(String b) {
+
+		switch (b) {
+
+			case "00" :return null;
+			case "01": return bloodwych.gfxWooden[0];
+			case "10": return bloodwych.gfxWooden[2];
+			case "11": return bloodwych.gfxWooden[1];
+			default:return null;
+		}
+	}
+
+	private String hexToBinary(String hex) {
+
+		String ret="";
+
+		// lookup table for easier conversion. '0' characters are padded for '1' to '7'
+
+		HashMap<Character, String> lookupTable = new HashMap<>();
+		lookupTable.put('0', "0000");
+		lookupTable.put('1', "0001");
+		lookupTable.put('2', "0010");
+		lookupTable.put('3', "0011");
+		lookupTable.put('4', "0100");
+		lookupTable.put('5', "0101");
+		lookupTable.put('6', "0110");
+		lookupTable.put('7', "0111");
+		lookupTable.put('8', "1000");
+		lookupTable.put('9', "1001");
+		lookupTable.put('a', "1010");
+		lookupTable.put('A', "1010");
+		lookupTable.put('B', "1011");
+		lookupTable.put('b', "1011");
+		lookupTable.put('C', "1100");
+		lookupTable.put('c', "1100");
+		lookupTable.put('d', "1101");
+		lookupTable.put('D', "1101");
+		lookupTable.put('e', "1110");
+		lookupTable.put('E', "1110");
+		lookupTable.put('f', "1111");
+		lookupTable.put('F', "1111");
+
+		char[] hexArray = hex.toCharArray();
+
+		for (int i = 0; i < hexArray.length; i++) {
+			if (lookupTable.containsKey(hexArray[i])) {
+				ret += lookupTable.get(hexArray[i]);
+			} else {
+				return null;
+			}
+		}
+		return ret;
+	}
 
 
 	public void drawImage(Graphics g, BufferedImage image, int[] pos, Player p, int scale) {

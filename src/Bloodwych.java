@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 public class Bloodwych extends KeyAdapter {
 	public BufferedImage img;
 	public BufferedImage gfxStone;
+	public BufferedImage[] gfxWooden = new BufferedImage[3];
 
 	public BloodwychFrame frame = null;
 	private int currentMap = 0;
@@ -34,12 +35,12 @@ public class Bloodwych extends KeyAdapter {
 			{143, 0, 17, 76, 15, 0},//5
 			{160, 0, 64, 76, 32, 0},//6
 			{224, 0, 17, 76, 96, 0},//7
-			{241, 0, 16, 76, 113, 0},
-			{0, 76, 32, 42, 0, 14},
+			{241, 0, 16, 76, 113, 0},//8
+			{0, 76, 32, 42, 0, 14},//9
 			{32, 76, 8, 42, 32, 14},
 			{40, 76, 48, 42, 40, 14},
 			{88, 76, 8, 42, 88, 14},
-			{96, 76, 32, 42, 96, 14},
+			{96, 76, 32, 42, 96, 14},//13
 			{128, 76, 41, 36, 0, 14},
 			{168, 76, 6, 36, 40, 14},
 			{174, 76, 36, 36, 46, 14},
@@ -80,6 +81,9 @@ public class Bloodwych extends KeyAdapter {
 	private void loadImages() throws IOException {
 		img = ImageIO.read(this.getClass().getResource("/images/back.png"));
 		gfxStone = ImageIO.read(this.getClass().getResource("/images/screen1.png"));
+		gfxWooden[0] = ImageIO.read(this.getClass().getResource("/images/screen2.png"));
+		gfxWooden[1] = ImageIO.read(this.getClass().getResource("/images/screen3.png"));
+		gfxWooden[2] = ImageIO.read(this.getClass().getResource("/images/screen4.png"));
 
 
 
