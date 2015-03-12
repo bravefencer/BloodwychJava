@@ -10,13 +10,18 @@ import java.util.List;
  * Created by ERTE005 on 09.03.2015.
  */
 public class FileLoader {
-	public void load(String map, Tower tower) throws IOException {
+	public void load(String map, Tower tower)  {
 
 
 		Path path = new File(this.getClass().getResource("/maps/" + map + ".MAP").getFile()).toPath();
-		byte[] uInt8Array = Files.readAllBytes(path);
+        byte[] uInt8Array = new byte[0];
+        try {
+            uInt8Array = Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		for(int x = 0; x < 8; x++) {
+        for(int x = 0; x < 8; x++) {
 			Map level = new Map(uInt8Array[x+8] & 0xFF, uInt8Array[x] & 0xFF, uInt8Array[x+32] & 0xFF, uInt8Array[x+40] & 0xFF);
 			tower.pushMap(level);
 		}

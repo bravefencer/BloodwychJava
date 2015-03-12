@@ -25,8 +25,12 @@ public class BloodwychFrame extends JFrame {
 
 	}
 
-	public void updateStatusLabel(Player p1, String hex, int level) {
-		status.setText("Y:"+p1.y+" X:"+p1.x+" r:"+p1.rotation+" hex:"+hex+" level:"+level);
+	public void updateStatusLabel(Player p1, String[][] map, int level, String currentTower) {
+
+            //todo show hex
+            status.setText("Y:"+p1.y+" X:"+p1.x+" r:"+p1.rotation+" Tower:"+currentTower+" level:"+level);
+
+
 	}
 
 

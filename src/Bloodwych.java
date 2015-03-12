@@ -79,13 +79,13 @@ public class Bloodwych extends KeyAdapter {
 
 		public Bloodwych() throws IOException {
 		loadImages();
-		loadMap(Maps[0]);
+		loadMap(Maps[0], tower);
             frame = new BloodwychFrame(this);
             frame.setVisible(true);
 
 		}
 
-	private void loadMap(String map) throws IOException {
+	private void loadMap(String map, Tower tower){
 		fileLoader.load(map, tower);
 
 	}
@@ -179,8 +179,18 @@ public class Bloodwych extends KeyAdapter {
             p1.pView(tower.levels.get(p1.level).map);
 
         }
+        if(key == KeyEvent.VK_T) {
+            currentMap = currentMap + 1;
+            if(currentMap > Maps.length) {
+                currentMap = 0;
+            }
+            tower = new Tower();
+            loadMap(Maps[currentMap],tower);
+            p1.pView(tower.levels.get(p1.level).map);
 
-		frame.updateStatusLabel(p1, tower.levels.get(p1.level).map[p1.y][p1.x],p1.level);
+        }
+
+		frame.updateStatusLabel(p1, tower.levels.get(p1.level).map,p1.level,Maps[currentMap]);
 		frame.canvas.repaint();
 
 
