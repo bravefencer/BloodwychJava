@@ -226,7 +226,7 @@ public class GraphicsHelper {
 					}
 					case 18: {
 						if (BlockType == 5) {
-							//drawDoorFrame(p);
+							drawDoorFrame(g,p);
 						} else {
 							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 31), 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);//EAST
 							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 29), 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);//NORTH
@@ -384,8 +384,8 @@ public class GraphicsHelper {
 		}
 
 		g2d.drawImage(image,
-				pos[4] * scale,
-				pos[5] * scale,
+				pos[4] * scale + p.portalX,
+				pos[5] * scale + p.portalY,
                 (pos[4]+pos[2]) * scale,
                 (pos[5]+pos[3]) * scale,
 				pos[0],
@@ -415,26 +415,43 @@ public class GraphicsHelper {
 			case 1:return getStoneWall(g, hex,d,pos,p);
 			case 2:return null;
 			case 3: return getMiscObj(BB);
-			case 4: {
-				if (hex.substring(1, 2) == "1") {
+			case 4:
+				if (BB == 1) {
 					return bloodwych.gfxStairs[0];
 				} else {
 					return bloodwych.gfxStairs[1];
 				}
+             case 5:
+                 if (BB % 4 == 2 || BB % 4 == 3) {
+                     return bloodwych.gfxDoor[1];
+                 } else {
+                     return bloodwych.gfxDoor[0];
+                 }
 
-			}
+            case 6: {
+                if (hex == "0706") {
+                    return bloodwych.gfxFloor[1];
+                } //Roof Pit
+                if (BB % 4 == 0) {
+                    return null;
+                } else if (BB % 4 == 1) {
+                    return bloodwych.gfxFloor[0];
+                } //Floor Pit
+                else if (BB % 4 == 2) {
+                    return bloodwych.gfxFloor[2];
+                } //Green Pad
+                else if (BB % 4 == 3) {
+                    return null;
+                } //Blank space
+                else {
+                    return null;
+                } //Default blank space
+            }
+            case 7:
+                return null;
+            default: return null;
 
-//
-//			case 5:{if (BB%4 === 2 || BB%4 === 3) {return gfxDoor[1];}else{return gfxDoor[0];}}break;
-//			case 6:{if (Hex === "0706"){return gfxFloor[1];} //Roof Pit
-//				if (BB % 4 === 0) {return null;}
-//				else if (BB % 4 === 1) {return gfxFloor[0];} //Floor Pit
-//				else if (BB % 4 === 2) {return gfxFloor[2];} //Green Pad
-//				else if (BB % 4 === 3) {return null;} //Blank space
-//				else {return null;}} //Default blank space
-			case 7:return null;
-			default:return null;
-		}
+        }
 
 
 	}
@@ -538,7 +555,32 @@ public class GraphicsHelper {
 		return bloodwych.gfxStone;
 	}
 
+    private void drawDoorFrame(Graphics g, Player p) {
+
+        String hexCode = p.view[18];
+
+        int BB = Integer.parseInt(hexCode.substring(1, 2), 16);
+
+        if (BB >= 0 & BB <= 3 || BB >= 8 & BB <= 11) { //"North/South"
+            if (p.rotation == 0 || p.rotation == 2) {
+                drawImage(g, getImage(g, p.view[18], getWallDirection(p.rotation, 29), 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);
+                drawImage(g, getImage(g, p.view[18], getWallDirection(p.rotation, 31), 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);
+            } else {
+                drawImage(g, getImage(g, p.view[18], getWallDirection(p.rotation, 30), 30, p), bloodwych.gfxPos[30], p, bloodwych.scale);
+            }
+        } else {
+            if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
+                if (p.rotation == 1 || p.rotation == 3) {
+                    drawImage(g, getImage(g, p.view[18], getWallDirection(p.rotation, 29), 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);
+                    drawImage(g, getImage(g, p.view[18], getWallDirection(p.rotation, 31), 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);
+
+                } else {
+                    drawImage(g, getImage(g, p.view[18], getWallDirection(p.rotation, 30), 30, p), bloodwych.gfxPos[30], p, bloodwych.scale);
+                }
+            }
+
+        }
+    }
 
 
-
-}
+    }

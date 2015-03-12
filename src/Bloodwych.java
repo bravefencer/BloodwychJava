@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +27,8 @@ public class Bloodwych extends KeyAdapter {
 	public BufferedImage gfxWallSwitch;
 	public BufferedImage gfxGemSlot;
 	public BufferedImage gfxStairs[] = new BufferedImage[2];
+    public BufferedImage gfxDoor[]  = new BufferedImage[3];
+    public BufferedImage gfxFloor[] = new BufferedImage[3];
 
 
 	public BloodwychFrame frame = null;
@@ -107,6 +110,12 @@ public class Bloodwych extends KeyAdapter {
 		gfxGemSlot = ImageIO.read(this.getClass().getResource("/images/screen22.png"));
 		gfxStairs[0] = ImageIO.read(this.getClass().getResource("/images/screen10.png"));
 		gfxStairs[1] = ImageIO.read(this.getClass().getResource("/images/screen9.png"));
+        gfxDoor[0] = ImageIO.read(this.getClass().getResource("/images/screen6.png"));
+        gfxDoor[1] = ImageIO.read(this.getClass().getResource("/images/screen7.png"));
+        gfxDoor[2] = ImageIO.read(this.getClass().getResource("/images/screen8.png"));
+        gfxFloor[0] = ImageIO.read(this.getClass().getResource("/images/screen18.png"));
+        gfxFloor[1] = ImageIO.read(this.getClass().getResource("/images/screen19.png"));
+        gfxFloor[2] = ImageIO.read(this.getClass().getResource("/images/screen21.png"));
 
 
 
@@ -150,8 +159,28 @@ public class Bloodwych extends KeyAdapter {
             p1.pView(tower.levels.get(p1.level).map);
 
         }
+        if(key == KeyEvent.VK_A) {
+            p1.moveLeft();
+            p1.pView(tower.levels.get(p1.level).map);
 
-		frame.updateStatusLabel(p1, tower.levels.get(p1.level).map[p1.y][p1.x]);
+        }
+        if(key == KeyEvent.VK_D) {
+            p1.moveRight();
+            p1.pView(tower.levels.get(p1.level).map);
+
+        }
+        if(key == KeyEvent.VK_Y) {
+            p1.moveLevelUp(tower);
+            p1.pView(tower.levels.get(p1.level).map);
+
+        }
+        if(key == KeyEvent.VK_X) {
+            p1.moveLevelDown(tower);
+            p1.pView(tower.levels.get(p1.level).map);
+
+        }
+
+		frame.updateStatusLabel(p1, tower.levels.get(p1.level).map[p1.y][p1.x],p1.level);
 		frame.canvas.repaint();
 
 

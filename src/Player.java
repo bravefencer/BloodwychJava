@@ -74,6 +74,86 @@ public class Player {
 		this.x = this.x - (1 * xo) + (0 * yo);
 	}
 
+    public void moveLeft() {
+        int xo = 0;
+        int yo = 0;
+        switch (this.rotation) {
+            case 0:
+                xo = -1;
+                yo = 0;
+                break;
+            case 1:
+                xo =0;
+                yo = -1;
+                break;
+            case 2:
+                xo = 1;
+                yo = 0;
+                break;
+            case 3:
+                xo = 0;
+                yo = 1;
+                break;
+        }
+        this.y = this.y + (1 * yo) - (0 * xo);
+        this.x = this.x + (1 * xo) + (0 * yo);
+    }
+
+    public void moveRight() {
+        int xo = 0;
+        int yo = 0;
+        switch (this.rotation) {
+            case 0:
+                xo = 1;
+                yo = 0;
+                break;
+            case 1:
+                xo =0;
+                yo = 1;
+                break;
+            case 2:
+                xo = -1;
+                yo = 0;
+                break;
+            case 3:
+                xo = 0;
+                yo = -1;
+                break;
+        }
+        this.y = this.y + (1 * yo) - (0 * xo);
+        this.x = this.x + (1 * xo) + (0 * yo);
+    }
+
+
+    public void moveLevelUp(Tower tower) {
+
+
+        this.level = this.level + 1;
+        if (this.level > tower.levels.size()){
+            this.level = 0;
+        }
+        else {
+            this.moveForward();
+            this.moveForward();
+        }
+
+    }
+    public void moveLevelDown(Tower tower) {
+
+        this.level = this.level - 1;
+        if (this.level > tower.levels.size()){
+            this.level = tower.levels.size()-1;
+        }
+        else {
+            this.moveForward();
+            this.moveForward();
+        }
+
+    }
+
+
+
+
 
     /**
      * 0 = North
