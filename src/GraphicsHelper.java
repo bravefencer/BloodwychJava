@@ -54,9 +54,9 @@ public class GraphicsHelper {
 		Wall[26] = 1;
 		Wall[27] = 3;
 		Wall[28] = 2;
-		Wall[29] = 3;
-		Wall[30] = 0;
-		Wall[31] = 1;
+		Wall[29] = 3; //2
+		Wall[30] = 0; //3
+		Wall[31] = 1; //0
 
 		Wall[s] = Wall[s] + d;
 
@@ -113,7 +113,7 @@ public class GraphicsHelper {
 
 						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 22), 22, p), bloodwych.gfxPos[22], p, bloodwych.scale);
 						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 21), 21, p), bloodwych.gfxPos[21], p, bloodwych.scale);
-						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 26), 16, p), bloodwych.gfxPos[16], p, bloodwych.scale);
+						drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 16), 16, p), bloodwych.gfxPos[16], p, bloodwych.scale);
 
 						break;
 					}
@@ -228,9 +228,9 @@ public class GraphicsHelper {
 						if (BlockType == 5) {
 							//drawDoorFrame(p);
 						} else {
-							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 31), 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);
-							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 29), 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);
-							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 30), 30, p), bloodwych.gfxPos[30], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 31), 31, p), bloodwych.gfxPos[31], p, bloodwych.scale);//EAST
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 29), 29, p), bloodwych.gfxPos[29], p, bloodwych.scale);//NORTH
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 30), 30, p), bloodwych.gfxPos[30], p, bloodwych.scale);//SOUTH
 
 							break;
 
@@ -415,10 +415,26 @@ public class GraphicsHelper {
 			case 1:return getStoneWall(g, hex,d,pos,p);
 			case 2:return null;
 			case 3: return getMiscObj(BB);
+			case 4: {
+				if (hex.substring(1, 2) == "1") {
+					return bloodwych.gfxStairs[0];
+				} else {
+					return bloodwych.gfxStairs[1];
+				}
+
+			}
+
+//
+//			case 5:{if (BB%4 === 2 || BB%4 === 3) {return gfxDoor[1];}else{return gfxDoor[0];}}break;
+//			case 6:{if (Hex === "0706"){return gfxFloor[1];} //Roof Pit
+//				if (BB % 4 === 0) {return null;}
+//				else if (BB % 4 === 1) {return gfxFloor[0];} //Floor Pit
+//				else if (BB % 4 === 2) {return gfxFloor[2];} //Green Pad
+//				else if (BB % 4 === 3) {return null;} //Blank space
+//				else {return null;}} //Default blank space
+			case 7:return null;
 			default:return null;
 		}
-
-
 
 
 	}
@@ -450,22 +466,22 @@ public class GraphicsHelper {
 
 			case 8: {
 				if (d == 0) {
-					return getWallDeco();
+					return getWallDeco(g,AA,CC,BB,bloodwych.gfxPos[pos],p);
 				} break;
 			} //North Wall has Deco
 			case 9: {
 				if (d == 1) {
-					return getWallDeco();
+					return getWallDeco(g,AA,CC,BB,bloodwych.gfxPos[pos],p);
 				} break;
 			} //East Wall has Deco
 			case 10: {
 				if (d == 2) {
-					return getWallDeco();
+					return getWallDeco(g,AA,CC, BB,bloodwych.gfxPos[pos],p);
 				} break;
 			} //South Wall has Deco
 			case 11: {
 				if (d == 3) {
-					return getWallDeco();
+					return getWallDeco(g,AA,CC,BB,bloodwych.gfxPos[pos],p);
 				} break;
 			} //West Wall has Deco
 			default: {
@@ -480,8 +496,46 @@ public class GraphicsHelper {
 		return bloodwych.gfxStone;
 	}
 
-	public BufferedImage getWallDeco() {
-		return null;
+	public BufferedImage getWallDeco(Graphics g, int AA, int CC, int BB, int[] pos, Player p) {
+		try {
+			if (CC >= 8) { //Wall has something on it
+				if (BB % 4 == 0) { //Shelf
+					return bloodwych.gfxShelf;
+				} else if (BB % 4 == 1) { //Sign
+					if (BB == 1) { //Random Color
+						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						return bloodwych.gfxScriptBanner;
+					} else if (AA == 0 && BB == 5) { //Serpent Flag
+						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						return bloodwych.gfxSerpBanner;
+					} else if (AA == 0 && BB == 9) { //Dragon Flag
+						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						return bloodwych.gfxDragonBanner;
+					} else if (AA == 0 && BB == 13) { //Moon Flag
+						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						return bloodwych.gfxMoonBanner;
+					} else if (AA == 1 && BB == 1) { //Choas Flag
+						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						return bloodwych.gfxChaosBanner;
+					} else if (BB % 4 == 1) {
+						//i = bwMergeImage(GraphicsData[1][0][x],GraphicsData[1][1][x]);
+					} else {
+						// i = GraphicsData[1][0][x];
+					}
+				} else if (BB % 4 ==  2) { //Switch
+					return bloodwych.gfxWallSwitch;
+				} else if (BB % 4 == 3) { //Crystal Switch
+					return bloodwych.gfxGemSlot;
+				} else {
+					return bloodwych.gfxStone;
+				}
+			} else {
+				return bloodwych.gfxStone;
+			}
+		} catch (Exception e) {
+		}
+
+		return bloodwych.gfxStone;
 	}
 
 

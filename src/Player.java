@@ -165,7 +165,7 @@ public class Player {
                         break; //-2 +1
                     case 11:
                         this.view[11] = map[this.y + (2 * yo) - (1 * xo)][this.x + (2 * xo) + (1 * yo)];
-                        break; //-2 -1
+                        break; //-2 -1w
                     case 12:
                         this.view[12] = map[this.y + (2 * yo) - (0 * xo)][this.x + (2 * xo) + (0 * yo)];
                         break; //-2 0

@@ -11,6 +11,12 @@ public class BloodwychCanvas extends JComponent{
 
 	private Bloodwych bloodwych;
 
+
+	BloodwychCanvas() {
+	}
+
+
+
 	public BloodwychCanvas(Bloodwych bloodwych) {
 		this.bloodwych = bloodwych;
 	}
@@ -21,6 +27,7 @@ public class BloodwychCanvas extends JComponent{
 		clearCanvas(g);
 		drawBackground(g);
 		drawMap(g);
+
 
 	}
 

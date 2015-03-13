@@ -17,6 +17,16 @@ public class Bloodwych extends KeyAdapter {
 	public BufferedImage gfxStone;
 	public BufferedImage[] gfxWooden = new BufferedImage[3];
 	public BufferedImage[] gfxMisc = new BufferedImage[2];
+	public BufferedImage gfxShelf;
+	public BufferedImage gfxScriptBanner;
+	public BufferedImage gfxSerpBanner;
+	public BufferedImage gfxDragonBanner;
+	public BufferedImage gfxMoonBanner;
+	public BufferedImage gfxChaosBanner;
+	public BufferedImage gfxWallSwitch;
+	public BufferedImage gfxGemSlot;
+	public BufferedImage gfxStairs[] = new BufferedImage[2];
+
 
 	public BloodwychFrame frame = null;
 	private int currentMap = 0;
@@ -87,6 +97,16 @@ public class Bloodwych extends KeyAdapter {
 		gfxWooden[2] = ImageIO.read(this.getClass().getResource("/images/screen4.png"));
 		gfxMisc[0] = ImageIO.read(this.getClass().getResource("/images/screen5.png"));
 		gfxMisc[1] = ImageIO.read(this.getClass().getResource("/images/screen11.png"));
+		gfxShelf = ImageIO.read(this.getClass().getResource("/images/screen12.png"));
+		gfxScriptBanner = ImageIO.read(this.getClass().getResource("/images/screen17.png"));
+		gfxSerpBanner = ImageIO.read(this.getClass().getResource("/images/screen13.png"));
+		gfxDragonBanner = ImageIO.read(this.getClass().getResource("/images/screen14.png"));
+		gfxMoonBanner = ImageIO.read(this.getClass().getResource("/images/screen15.png"));
+		gfxChaosBanner = ImageIO.read(this.getClass().getResource("/images/screen16.png"));
+		gfxWallSwitch = ImageIO.read(this.getClass().getResource("/images/screen20.png"));
+		gfxGemSlot = ImageIO.read(this.getClass().getResource("/images/screen22.png"));
+		gfxStairs[0] = ImageIO.read(this.getClass().getResource("/images/screen10.png"));
+		gfxStairs[1] = ImageIO.read(this.getClass().getResource("/images/screen9.png"));
 
 
 
@@ -107,34 +127,32 @@ public class Bloodwych extends KeyAdapter {
 		if (key == KeyEvent.VK_W) {
 			p1.moveForward();
 			p1.pView(tower.levels.get(p1.level).map);
-			frame.canvas.repaint();
+
 		}
 
 		if (key == KeyEvent.VK_S) {
 			p1.moveBackward();
 			p1.pView(tower.levels.get(p1.level).map);
-			frame.canvas.repaint();
 		}
 
         if (key == KeyEvent.VK_SPACE) {
-             p1 = new Player(12, 22, 3,0,0,0);
+             p1 = new Player(15, 13, 3,0,0,0);
             p1.pView(tower.levels.get(p1.level).map);
-            frame.canvas.repaint();
         }
 
         if(key == KeyEvent.VK_Q) {
             p1.rotatePlayer(1);
             p1.pView(tower.levels.get(p1.level).map);
-            frame.canvas.repaint();
 
         }
         if(key == KeyEvent.VK_E) {
             p1.rotatePlayer(-1);
             p1.pView(tower.levels.get(p1.level).map);
-            frame.canvas.repaint();
 
         }
 
+		frame.updateStatusLabel(p1, tower.levels.get(p1.level).map[p1.y][p1.x]);
+		frame.canvas.repaint();
 
 
 	}
