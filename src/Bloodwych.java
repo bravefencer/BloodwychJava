@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by ERTE005 on 09.03.2015.
  */
-public class Bloodwych extends KeyAdapter {
+public class Bloodwych  {
     public BufferedImage img;
     public BufferedImage gfxStone;
     public BufferedImage[] gfxWooden = new BufferedImage[3];
@@ -27,18 +27,12 @@ public class Bloodwych extends KeyAdapter {
     public BufferedImage gfxChaos;
     public BufferedImage gfxSerp;
     public BufferedImage gfxBrown;
-    public boolean forwardpressed;
-    private boolean backwardPressed;
-    private boolean leftPressed;
-    private boolean rightpressed;
-    private boolean leftRotationPressed;
-    private boolean rightRotationPressed;
 
-    private FPSThread bloodwychThread;
+    private Main gameloop;
 
     public BloodwychFrame frame = null;
-    private int currentMap = 0;
-    private String[] Maps = {"MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP"};
+    public int currentMap = 0;
+    public String[] Maps = {"MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP"};
     FileLoader fileLoader = new FileLoader();
     Tower tower = new Tower();
     int b = 0;
@@ -81,20 +75,25 @@ public class Bloodwych extends KeyAdapter {
 
     public GraphicsHelper graphicsHelper = new GraphicsHelper(this);
 
+    public KeybordControl keyboard = new KeybordControl();
+
+    FPS fps;
+
     public Bloodwych() throws IOException {
         loadImages();
         loadMap(Maps[0], tower);
         frame = new BloodwychFrame(this);
         frame.setVisible(true);
+        fps = new FPS();
+        fps.initialize();
+        gameloop = new Main(this);
+        gameloop.start();
 
-        bloodwychThread = new FPSThread(this);
-
-        bloodwychThread.start();
 
     }
 
 
-    private void loadMap(String map, Tower tower) {
+    public void loadMap(String map, Tower tower) {
         fileLoader.load(map, tower);
 
     }
@@ -142,120 +141,43 @@ public class Bloodwych extends KeyAdapter {
     void updateScreen() {
 
         p1.pView(tower.levels.get(p1.level).map);
-        frame.updateStatusLabel(p1, tower.levels.get(p1.level).map, p1.level, Maps[currentMap]);
         frame.canvas.repaint();
+        fps.calculate();
+        frame.updateStatusLabel(p1, tower.levels.get(p1.level).map, p1.level, Maps[currentMap],fps.getFrameRate());
 
 
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_W) {
-            forwardpressed = false;
-        }
-        if (key == KeyEvent.VK_S) {
-            backwardPressed = false;
-        }
-        if (key == KeyEvent.VK_Q) {
-            leftRotationPressed = false;
-        }
-        if (key == KeyEvent.VK_E) {
-            rightRotationPressed = false;
-        }
-        if (key == KeyEvent.VK_A) {
-            leftPressed = false;
-        }
-        if (key == KeyEvent.VK_D) {
-            rightpressed = false;
-        }
-    }
 
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_W) {
-            if (!forwardpressed) {
-                p1.moveForward();
-                forwardpressed = true;
-            }
-
-        }
-        if (key == KeyEvent.VK_S) {
-
-            if (!backwardPressed) {
-                p1.moveBackward();
-                backwardPressed = true;
-            }
-
-
-        }
-
-
-        if (key == KeyEvent.VK_Q) {
-            if(!leftRotationPressed) {
-                p1.rotatePlayer(1);
-                leftRotationPressed = true;
-            }
+//        }
+//        if (key == KeyEvent.VK_SPACE) {
+//            p1 = new Player(15, 13, 3, 0, 0, 0);
+//
+//        }
+//        if (key == KeyEvent.VK_Y) {
+//            p1.moveLevelUp(tower);
+//
+//
+//        }
+//        if (key == KeyEvent.VK_X) {
+//            p1.moveLevelDown(tower);
+//
+//
+//        }
+//        if (key == KeyEvent.VK_T) {
+//            currentMap = currentMap + 1;
+//            if (currentMap > Maps.length) {
+//                currentMap = 0;
+//            }
+//            tower = new Tower();
+//            loadMap(Maps[currentMap], tower);
+//
+//
+//    }
 
 
-
-        }
-        if (key == KeyEvent.VK_E) {
-            if(!rightRotationPressed) {
-                p1.rotatePlayer(-1);
-                rightRotationPressed = true;
-            }
-
-
-        }
-        if (key == KeyEvent.VK_A) {
-            if(!leftPressed) {
-                p1.moveLeft();
-                leftPressed = true;
-            }
-
-
-
-        }
-        if (key == KeyEvent.VK_D) {
-            if(!rightpressed) {
-                p1.moveRight();
-                rightpressed=true;
-            }
-
-
-
-        }
-        if (key == KeyEvent.VK_SPACE) {
-            p1 = new Player(15, 13, 3, 0, 0, 0);
-
-        }
-        if (key == KeyEvent.VK_Y) {
-            p1.moveLevelUp(tower);
-
-
-        }
-        if (key == KeyEvent.VK_X) {
-            p1.moveLevelDown(tower);
-
-
-        }
-        if (key == KeyEvent.VK_T) {
-            currentMap = currentMap + 1;
-            if (currentMap > Maps.length) {
-                currentMap = 0;
-            }
-            tower = new Tower();
-            loadMap(Maps[currentMap], tower);
-
-
-        }
-
-
-    }
+//    }
 
 
 }

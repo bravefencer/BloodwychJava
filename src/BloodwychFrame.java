@@ -20,15 +20,15 @@ public class BloodwychFrame extends JFrame {
 		this.getContentPane().add(canvas);
 		this.getContentPane().add(status);
 		this.pack();
-		this.addKeyListener(bloodwych);
+		this.addKeyListener(bloodwych.keyboard);
 
 
 	}
 
-	public void updateStatusLabel(Player p1, String[][] map, int level, String currentTower) {
+	public void updateStatusLabel(Player p1, String[][] map, int level, String currentTower, String fps) {
 
             //todo show hex
-            status.setText("Y:"+p1.y+" X:"+p1.x+" r:"+p1.rotation+" Tower:"+currentTower+" level:"+level);
+            status.setText("Y:"+p1.y+" X:"+p1.x+" r:"+p1.rotation+" Tower:"+currentTower+" level:"+level+ " FPS:"+fps);
 
 
 	}
