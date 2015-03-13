@@ -22,14 +22,18 @@ public class BloodwychCanvas extends JComponent{
 	}
 
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+        super.paintComponent(g);
+        try {
+            clearCanvas(g);
+            drawBackground(g);
+            drawMap(g);
 
-		clearCanvas(g);
-		drawBackground(g);
-		drawMap(g);
+        } catch (Exception ex) {
+
+        }
 
 
-	}
+    }
 
 	private void drawMap(Graphics g) {
 		bloodwych.graphicsHelper.drawPlayersView(bloodwych.p1, g);

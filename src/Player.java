@@ -11,7 +11,8 @@ public class Player {
 	public int portalY;
 	public String[] view;
 
-	public Player(int posX, int posY, int level, int rotation, int portalX, int portalY) {
+
+    public Player(int posX, int posY, int level, int rotation, int portalX, int portalY) {
 
 		this.x = posX;
 		this.y = posY;

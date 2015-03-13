@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.util.HashMap;
 
 /**
  * Created by ERTE005 on 11.03.2015.
  */
 public class GraphicsHelper {
+
 
 	Bloodwych bloodwych;
 
@@ -519,25 +521,27 @@ public class GraphicsHelper {
 				if (BB % 4 == 0) { //Shelf
 					return bloodwych.gfxShelf;
 				} else if (BB % 4 == 1) { //Sign
-					if (BB == 1) { //Random Color
-						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
-						return bloodwych.gfxScriptBanner;
+					if (AA== 0 && BB == 1) { //Random Color
+						drawImage(g, bloodwych.gfxBrown, pos, p, bloodwych.scale);
+						return null;
 					} else if (AA == 0 && BB == 5) { //Serpent Flag
-						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						drawImage(g, bloodwych.gfxSerp, pos, p, bloodwych.scale);
 						return bloodwych.gfxSerpBanner;
 					} else if (AA == 0 && BB == 9) { //Dragon Flag
-						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+						drawImage(g, bloodwych.gfxDragon, pos, p, bloodwych.scale);
 						return bloodwych.gfxDragonBanner;
 					} else if (AA == 0 && BB == 13) { //Moon Flag
 						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
 						return bloodwych.gfxMoonBanner;
-					} else if (AA == 1 && BB == 1) { //Choas Flag
-						drawImage(g, bloodwych.gfxScriptBanner, pos, p, bloodwych.scale);
+					} else if (AA == 1 && BB == 1) { //Chaos Flag
+						drawImage(g, bloodwych.gfxChaos, pos, p, bloodwych.scale);
 						return bloodwych.gfxChaosBanner;
 					} else if (BB % 4 == 1) {
-						//i = bwMergeImage(GraphicsData[1][0][x],GraphicsData[1][1][x]);
+                        drawImage(g, bloodwych.gfxBrown, pos, p, bloodwych.scale);
+                        return bloodwych.gfxScriptBanner;
 					} else {
-						// i = GraphicsData[1][0][x];
+                        drawImage(g, bloodwych.gfxBrown, pos, p, bloodwych.scale);
+                        return bloodwych.gfxScriptBanner;
 					}
 				} else if (BB % 4 ==  2) { //Switch
 					return bloodwych.gfxWallSwitch;
@@ -581,6 +585,91 @@ public class GraphicsHelper {
 
         }
     }
+
+
+    public BufferedImage recolorImage(BufferedImage img, String pallet, String type,  Color[] rgbData) {
+
+        Color[] oC = new Color[]{new Color(64, 128, 224), new Color(32, 32, 224), new Color(160, 160, 160)};
+        Color[] Dragon = new Color[]{new Color(129, 32, 0), new Color(224, 0, 0), new Color(224, 129, 96)};
+        Color[] Serpent = new Color[]{new Color(0, 129, 0), new Color(0, 192, 0), new Color(224, 129, 96)};
+        Color[] Chaos = new Color[]{new Color(224, 129, 96), new Color(224, 192, 0), new Color(224, 129, 96)};
+        Color[] Brown = new Color[]{new Color(129, 32, 0), new Color(160, 64, 32), new Color(224, 129, 96)};
+        Color[] Plain = new Color[]{new Color(64, 64, 64)};
+
+        Color[] palletData = rgbData;
+        switch (pallet) {
+
+            case "Dragon": {
+                palletData = Dragon;
+            }
+            ;
+            break;
+            case "Chaos": {
+                palletData = Chaos;
+            }
+            ;
+            break;
+            case "Brown": {
+                palletData = Brown;
+            }
+            ;
+            break;
+            case "Serp": {
+                palletData = Serpent;
+            }
+            ;
+            break;
+            case "Plain": {
+                palletData = Plain;
+            }
+            ;
+            break;
+
+        }
+
+        int[] colors = new int[img.getWidth() * img.getHeight()];
+        int[] imageData = img.getRGB(0, 0, img.getWidth(), img.getHeight(), colors, 0, img.getWidth());
+
+
+        // examine every pixel,
+        // change any old rgb to the new-rgb
+        for (int i = 0; i < imageData.length; i++) {
+            // is this pixel the old rgb?
+            if (type.equals("Banner")) {
+                Color color = new Color(imageData[i]);
+
+                if (color.equals(oC[0])) {
+                    // change to your new rgb
+                    Color colorNew = new Color(palletData[0].getRed(), palletData[0].getGreen(), palletData[0].getBlue(), color.getAlpha());
+                    imageData[i] = colorNew.getRGB();
+                } else if (color.equals(oC[1])) {
+                    // change to your new rgb
+                    Color colorNew = new Color(palletData[1].getRed(), palletData[1].getGreen(), palletData[1].getBlue(), color.getAlpha());
+                    imageData[i] = colorNew.getRGB();
+                } else if (color.equals(oC[2])) {
+                    Color colorNew = new Color(palletData[2].getRed(), palletData[2].getGreen(), palletData[2].getBlue(), color.getAlpha());
+                    // change to your new rgb
+                    imageData[i] = colorNew.getRGB();
+                }
+
+            } else if (type.equals("Door")) {
+                Color color = new Color(imageData[i]);
+                if (color.equals(oC[0])) {
+                    Color colorNew = new Color(rgbData[0].getRed(), rgbData[0].getGreen(), rgbData[0].getBlue(), color.getAlpha());
+                    // change to your new rgb
+                    imageData[i] = colorNew.getRGB();
+                }
+            }
+
+        }
+        BufferedImage newImg = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        newImg.setRGB(0, 0, img.getWidth(), img.getHeight(), imageData, 0, img.getWidth());
+
+
+        return newImg;
+
+    }
+
 
 
     }
