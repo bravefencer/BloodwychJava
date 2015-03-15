@@ -3,16 +3,18 @@
  */
 public class Player {
 
-	public int x;
+    public int pbg;
+    public int x;
 	public int y;
 	public int level;
 	public int rotation;
 	public int portalX;
 	public int portalY;
 	public String[] view;
+    Bloodwych bloodwych;
 
 
-    public Player(int posX, int posY, int level, int rotation, int portalX, int portalY) {
+    public Player(int posX, int posY, int level, int rotation, int portalX, int portalY, Bloodwych bloodwych) {
 
 		this.x = posX;
 		this.y = posY;
@@ -21,8 +23,96 @@ public class Player {
 		this.portalX = portalX;
 		this.portalY = portalY;
 		this.view = new String[20];
+        this.pbg = 0;
+        this.bloodwych = bloodwych;
 
 	}
+
+
+    public void switchPlayerBackground() {
+        if(this.pbg == 0) {
+            this.pbg = 1;
+        }
+        else {
+            this.pbg = 0;
+        }
+    }
+
+    public void updateAction () {
+
+        //door ahead?
+         if (this.view[15].substring(3).equals("5")) {
+
+            int xo = 0, yo = 0;
+            int mapX;
+            int mapY;
+
+            switch (this.rotation) {
+                case 0:
+                    xo = 0;
+                    yo = -1;
+                    break;
+                case 1:
+                    xo = 1;
+                    yo = 0;
+                    break;
+                case 2:
+                    xo = 0;
+                    yo = 1;
+                    break;
+                case 3:
+                    xo = -1;
+                    yo = 0;
+                    break;
+            }
+
+            mapY = this.y + (1 * yo) - (0 * xo); //-1
+            mapX = this.x + (1 * xo) + (0 * yo); //0
+
+            switch (this.view[15].substring(1, 2)) {
+
+                case "0": {
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0105"; // bunte door
+                    break;
+                }
+                case "1": {
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0005"; // (BB mod 2 = 0 => Open door) bunte tür geöffnet
+                    break;
+                }
+                case "2": { //geöffnete Gittertür (0205)
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0305";
+                    break;
+                }
+                case "3": { // geschlossene Gittertür (0305)
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0205"; // (BB mod 2 = 0 => Open door)
+                    break;
+                }
+                case "4": {
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0505";
+                    break;
+                }
+                case "5": {
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0405"; // (BB mod 2 = 0 => Open door)
+                    break;
+                }
+                case "6": {
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0705"; //gittertür geschlossen
+                    break;
+                }
+                case "7": {
+                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0605"; // (BB mod 2 = 0 => Open door) Gittertür geöffnet
+                    break;
+                }
+
+                default:
+                    break;
+
+
+            }
+        }
+    };
+
+
 
 
 	public void moveForward() {
@@ -50,6 +140,7 @@ public class Player {
             }
             this.y = this.y + (1 * yo) - (0 * xo);
             this.x = this.x + (1 * xo) + (0 * yo);
+            switchPlayerBackground();
         }
 	}
 
@@ -78,6 +169,7 @@ public class Player {
             }
             this.y = this.y - (1 * yo) - (0 * xo);
             this.x = this.x - (1 * xo) + (0 * yo);
+            this.switchPlayerBackground();
         }
 	}
 
@@ -105,6 +197,7 @@ public class Player {
             }
             this.y = this.y + (1 * yo) - (0 * xo);
             this.x = this.x + (1 * xo) + (0 * yo);
+            this.switchPlayerBackground();
         }
     }
 
@@ -132,6 +225,7 @@ public class Player {
             }
             this.y = this.y + (1 * yo) - (0 * xo);
             this.x = this.x + (1 * xo) + (0 * yo);
+            this.switchPlayerBackground();
         }
     }
 
@@ -186,6 +280,7 @@ public class Player {
                 this.rotation = 0;
             }
         }
+        this.switchPlayerBackground();
     }
 
     public boolean checkObject(String hex) {
@@ -304,7 +399,7 @@ public class Player {
                         this.view[17] = map[this.y + (0 * yo) - (1 * xo)][this.x + (0 * xo) + (1 * yo)];
                         break; //0 -1
                     case 18:
-                        this.view[18] = map[this.y][this.x];
+                        this.view[18] = map[this.y][this.x]; break;
                     case 19:
                         this.view[19] = map[this.y - (1 * yo) - (0 * xo)][this.x - (1 * xo) + (0 * yo)];
                         break; //1 0

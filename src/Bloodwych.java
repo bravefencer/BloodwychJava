@@ -37,8 +37,8 @@ public class Bloodwych  {
     Tower tower = new Tower();
     int b = 0;
     int scale = 3;
-    Player p1 = new Player(12, 22, 3, 0, 0, 0);
-    Player p2 = new Player(14, 22, 3, 0, 400, 0);
+    Player p1 = new Player(30, 1, 3, 0, 0, 0, this);
+    Player p2 = new Player(14, 22, 3, 0, 400, 0, this);
     int[][] background = new int[][]{{0, 0, 128, 76, 0, 0}, {128, 0, 128, 76, 0, 0}};
     int[][] gfxPos = new int[][]{{15, 0, 98, 76, 15, 0},
             {0, 0, 15, 76, 0, 0},
@@ -140,10 +140,12 @@ public class Bloodwych  {
 
     void updateScreen() {
 
-        p1.pView(tower.levels.get(p1.level).map);
-        frame.canvas.repaint();
         fps.calculate();
+        p1.pView(tower.levels.get(p1.level).map);
+        p2.pView(tower.levels.get(p2.level).map);
+        frame.canvas.render();
         frame.updateStatusLabel(p1, tower.levels.get(p1.level).map, p1.level, Maps[currentMap],fps.getFrameRate());
+        frame.repaint();
 
 
     }

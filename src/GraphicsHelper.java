@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.util.HashMap;
@@ -12,7 +13,6 @@ public class GraphicsHelper {
 	Bloodwych bloodwych;
 
 	public GraphicsHelper(Bloodwych bloodwych) {
-
 		this.bloodwych = bloodwych;
 
 	}
@@ -133,7 +133,7 @@ public class GraphicsHelper {
 
 							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 23), 23, p), bloodwych.gfxPos[23], p, bloodwych.scale);
 							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 23), 24, p), bloodwych.gfxPos[24], p, bloodwych.scale);
-							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 27), 17, p), bloodwych.gfxPos[17], p, bloodwych.scale);
+							drawImage(g, getImage(g, p.view[x], getWallDirection(p.rotation, 17), 17, p), bloodwych.gfxPos[17], p, bloodwych.scale);
 
 
 						}
@@ -386,15 +386,15 @@ public class GraphicsHelper {
 		}
 
 		g2d.drawImage(image,
-				pos[4] * scale + p.portalX,
-				pos[5] * scale + p.portalY,
-                (pos[4]+pos[2]) * scale,
-                (pos[5]+pos[3]) * scale,
-				pos[0],
-				pos[1],
-				pos[0] + pos[2],
-				pos[1] + pos[3],
-				null,
+                pos[4] * scale + p.portalX,
+                pos[5] * scale + p.portalY,
+                (pos[4] + pos[2]) * scale + p.portalX,
+                (pos[5] + pos[3]) * scale + p.portalY,
+                pos[0],
+                pos[1],
+                pos[0] + pos[2],
+                pos[1] + pos[3],
+                null,
 				null);
 	}
 
@@ -424,7 +424,7 @@ public class GraphicsHelper {
 					return bloodwych.gfxStairs[1];
 				}
              case 5:
-                 if (BB % 4 == 2 || BB % 4 == 3 && BB % 2 == 1) {
+                 if ((BB % 4 == 2 || BB % 4 == 3) && BB % 2 == 1) {  // BB = 7
                      return bloodwych.gfxDoor[1]; // Gittertür (türtyp 1)
                  } else if((BB%4 == 0 || BB%4 == 1) && BB%2 == 1){
                      return bloodwych.gfxDoor[0];  // geschlossene nicht Gittertür (türtyp 2)
