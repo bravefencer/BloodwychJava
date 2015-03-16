@@ -20,109 +20,119 @@ public class Player {
 		this.rotation = rotation;
 		this.portalX = portalX;
 		this.portalY = portalY;
-		this.view = new String[19];
+		this.view = new String[20];
 
 	}
 
 
 	public void moveForward() {
-		int xo = 0;
-		int yo = 0;
-		switch (this.rotation) {
-			case 0:
-				xo = 0;
-				yo = -1;
-				break;
-			case 1:
-				xo = 1;
-				yo = 0;
-				break;
-			case 2:
-				xo = 0;
-				yo = 1;
-				break;
-			case 3:
-				xo = -1;
-				yo = 0;
-				break;
-		}
-		this.y = this.y + (1 * yo) - (0 * xo);
-		this.x = this.x + (1 * xo) + (0 * yo);
+        if(checkObject(this.view[15])) {
+
+            int xo = 0;
+            int yo = 0;
+            switch (this.rotation) {
+                case 0:
+                    xo = 0;
+                    yo = -1;
+                    break;
+                case 1:
+                    xo = 1;
+                    yo = 0;
+                    break;
+                case 2:
+                    xo = 0;
+                    yo = 1;
+                    break;
+                case 3:
+                    xo = -1;
+                    yo = 0;
+                    break;
+            }
+            this.y = this.y + (1 * yo) - (0 * xo);
+            this.x = this.x + (1 * xo) + (0 * yo);
+        }
 	}
 
 	public void moveBackward() {
-		int xo = 0;
-		int yo = 0;
-		switch (this.rotation) {
-			case 0:
-				xo = 0;
-				yo = -1;
-				break;
-			case 1:
-				xo = 1;
-				yo = 0;
-				break;
-			case 2:
-				xo = 0;
-				yo = 1;
-				break;
-			case 3:
-				xo = -1;
-				yo = 0;
-				break;
-		}
-		this.y = this.y - (1 * yo) - (0 * xo);
-		this.x = this.x - (1 * xo) + (0 * yo);
+
+        if(checkObject(this.view[19])){
+            int xo = 0;
+            int yo = 0;
+            switch (this.rotation) {
+                case 0:
+                    xo = 0;
+                    yo = -1;
+                    break;
+                case 1:
+                    xo = 1;
+                    yo = 0;
+                    break;
+                case 2:
+                    xo = 0;
+                    yo = 1;
+                    break;
+                case 3:
+                    xo = -1;
+                    yo = 0;
+                    break;
+            }
+            this.y = this.y - (1 * yo) - (0 * xo);
+            this.x = this.x - (1 * xo) + (0 * yo);
+        }
 	}
 
     public void moveLeft() {
-        int xo = 0;
-        int yo = 0;
-        switch (this.rotation) {
-            case 0:
-                xo = -1;
-                yo = 0;
-                break;
-            case 1:
-                xo =0;
-                yo = -1;
-                break;
-            case 2:
-                xo = 1;
-                yo = 0;
-                break;
-            case 3:
-                xo = 0;
-                yo = 1;
-                break;
+        if(checkObject(this.view[17])) {
+            int xo = 0;
+            int yo = 0;
+            switch (this.rotation) {
+                case 0:
+                    xo = -1;
+                    yo = 0;
+                    break;
+                case 1:
+                    xo = 0;
+                    yo = -1;
+                    break;
+                case 2:
+                    xo = 1;
+                    yo = 0;
+                    break;
+                case 3:
+                    xo = 0;
+                    yo = 1;
+                    break;
+            }
+            this.y = this.y + (1 * yo) - (0 * xo);
+            this.x = this.x + (1 * xo) + (0 * yo);
         }
-        this.y = this.y + (1 * yo) - (0 * xo);
-        this.x = this.x + (1 * xo) + (0 * yo);
     }
 
     public void moveRight() {
-        int xo = 0;
-        int yo = 0;
-        switch (this.rotation) {
-            case 0:
-                xo = 1;
-                yo = 0;
-                break;
-            case 1:
-                xo =0;
-                yo = 1;
-                break;
-            case 2:
-                xo = -1;
-                yo = 0;
-                break;
-            case 3:
-                xo = 0;
-                yo = -1;
-                break;
+        if(checkObject(this.view[16])) {
+            int xo = 0;
+            int yo = 0;
+            switch (this.rotation) {
+                case 0:
+                    xo = 1;
+                    yo = 0;
+                    break;
+                case 1:
+                    xo = 0;
+                    yo = 1;
+                    break;
+                case 2:
+                    xo = -1;
+                    yo = 0;
+                    break;
+                case 3:
+                    xo = 0;
+                    yo = -1;
+                    break;
+            }
+            this.y = this.y + (1 * yo) - (0 * xo);
+            this.x = this.x + (1 * xo) + (0 * yo);
         }
-        this.y = this.y + (1 * yo) - (0 * xo);
-        this.x = this.x + (1 * xo) + (0 * yo);
     }
 
 
@@ -178,6 +188,34 @@ public class Player {
         }
     }
 
+    public boolean checkObject(String hex) {
+
+        //example = 0105 = (Door: last pos = 5, closed: first pos = 0)
+        if (hex.substring(1, 2) == "8") {
+            return false;
+        }
+        switch (hex.substring(3, 4)) {
+
+            case "0":
+                return true; //empty
+
+            case "1":
+                return false; //wall
+
+            case "3":
+                return false; //pillar // bed
+            case "5": //door
+                if (Integer.parseInt(hex.substring(1, 2)) % 2 == 0) {
+                    return true; //opened door (type  1 or type 2)
+                } else {
+                    return false; //closed door (type 1 or type 2)
+                }
+            default: //opened wood door
+                return true;
+        }
+
+    }
+
 
 	/**
 	 * calculates the fields in map which are seen by the player relative for
@@ -207,7 +245,7 @@ public class Player {
 				break;
 		}
 
-		for(int x = 0; x < 19; x++) {
+		for(int x = 0; x < 20; x++) {
 
             try {
                 switch (x) {
@@ -267,7 +305,9 @@ public class Player {
                         break; //0 -1
                     case 18:
                         this.view[18] = map[this.y][this.x];
-                        break; //0 0
+                    case 19:
+                        this.view[19] = map[this.y - (1 * yo) - (0 * xo)][this.x - (1 * xo) + (0 * yo)];
+                        break; //1 0
                     default:
                         this.view[x] = "0001";
                         ;

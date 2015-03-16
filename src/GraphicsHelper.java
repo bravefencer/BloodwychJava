@@ -17,7 +17,7 @@ public class GraphicsHelper {
 
 	}
 
-	// wall direction is  the relative direction to player. )
+	// wall direction is  the relative direction to players view vecotr
 	public int getWallDirection(int d, int s) {
 		// d = player direction
 		// s = screen gfx position
@@ -424,12 +424,13 @@ public class GraphicsHelper {
 					return bloodwych.gfxStairs[1];
 				}
              case 5:
-                 if (BB % 4 == 2 || BB % 4 == 3) {
-                     return bloodwych.gfxDoor[1];
-                 } else {
-                     return bloodwych.gfxDoor[0];
-                 }
-
+                 if (BB % 4 == 2 || BB % 4 == 3 && BB % 2 == 1) {
+                     return bloodwych.gfxDoor[1]; // Gittertür (türtyp 1)
+                 } else if((BB%4 == 0 || BB%4 == 1) && BB%2 == 1){
+                     return bloodwych.gfxDoor[0];  // geschlossene nicht Gittertür (türtyp 2)
+                 } else if(BB%2 == 0){
+					 return bloodwych.gfxDoor[2]; // offene Tür(typ 1 oder typ 2)
+				 }
             case 6: {
                 if (hex == "0706") {
                     return bloodwych.gfxFloor[1];
