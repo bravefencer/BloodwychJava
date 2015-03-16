@@ -43,7 +43,7 @@ public class GameLogic {
             bloodwych.p1.rotatePlayer(1);
         }
         else if(bloodwych.keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
-            bloodwych.p1.updateAction();
+            bloodwych.p1.action();
         }
         else if(bloodwych.keyboard.keyDownOnce(KeyEvent.VK_Y)){
             bloodwych.p1.moveLevelUp(bloodwych.tower);
@@ -72,7 +72,7 @@ public class GameLogic {
             bloodwych.p2.rotatePlayer(1);
         }
         else if(bloodwych.keyboard.keyDownOnce(KeyEvent.VK_ENTER)){
-            bloodwych.p2.updateAction();
+            bloodwych.p2.action();
         }
 
         else if(bloodwych.keyboard.keyDownOnce(KeyEvent.VK_T)){

@@ -19,6 +19,10 @@ public class Map {
 		this.yOff = yOff;
 	}
 
+    public void setHexAtMapPos(int x, int y, String hex) {
+        this.map[y][x] = hex;
+    }
+
 
 
 

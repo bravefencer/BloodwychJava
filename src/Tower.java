@@ -15,4 +15,7 @@ public class Tower {
 		this.levels.push(map);
 	}
 
+    public void setHexAtMapPos(int level, int mapX, int mapY, String hex) {
+        levels.get(level).setHexAtMapPos(mapX,mapY,hex);
+    }
 }

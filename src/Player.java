@@ -6,6 +6,8 @@ public class Player {
     public int pbg;
     public int x;
 	public int y;
+    public int lastX;
+    public int lastY;
 	public int level;
 	public int rotation;
 	public int portalX;
@@ -18,6 +20,8 @@ public class Player {
 
 		this.x = posX;
 		this.y = posY;
+        this.lastX = posX;
+        this.lastY = posY;
 		this.level = level;
 		this.rotation = rotation;
 		this.portalX = portalX;
@@ -25,8 +29,15 @@ public class Player {
 		this.view = new String[20];
         this.pbg = 0;
         this.bloodwych = bloodwych;
+        bloodwych.tower.setHexAtMapPos(level, this.x, this.y,replaceAt(bloodwych.tower.levels.get(this.level).map[this.y][this.x],2,'8'));
 
 	}
+
+    public String replaceAt(String string, int index, char character) {
+        StringBuilder newString = new StringBuilder(string);
+        newString.setCharAt(index, character);
+        return newString.toString();
+    }
 
 
     public void switchPlayerBackground() {
@@ -38,7 +49,7 @@ public class Player {
         }
     }
 
-    public void updateAction () {
+    public void action() {
 
         //door ahead?
          if (this.view[15].substring(3).equals("5")) {
@@ -72,35 +83,35 @@ public class Player {
             switch (this.view[15].substring(1, 2)) {
 
                 case "0": {
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0105"; // bunte door
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '1')); // bunte door
                     break;
                 }
                 case "1": {
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0005"; // (BB mod 2 = 0 => Open door) bunte tür geöffnet
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX],1,'0')); // (BB mod 2 = 0 => Open door) bunte tür geöffnet
                     break;
                 }
-                case "2": { //geöffnete Gittertür (0205)
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0305";
+                case "2": { //geöffnete Gittertür (0205)w
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '3'));
                     break;
                 }
                 case "3": { // geschlossene Gittertür (0305)
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0205"; // (BB mod 2 = 0 => Open door)
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '2')); // (BB mod 2 = 0 => Open door)
                     break;
                 }
                 case "4": {
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0505";
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '5'));
                     break;
                 }
                 case "5": {
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0405"; // (BB mod 2 = 0 => Open door)
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '4')); // (BB mod 2 = 0 => Open door)
                     break;
                 }
                 case "6": {
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0705"; //gittertür geschlossen
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '7')); //gittertür geschlossen
                     break;
                 }
                 case "7": {
-                    bloodwych.tower.levels.get(this.level).map[mapY][mapX] = "0605"; // (BB mod 2 = 0 => Open door) Gittertür geöffnet
+                    bloodwych.tower.setHexAtMapPos(level, mapX, mapY, replaceAt(bloodwych.tower.levels.get(this.level).map[mapY][mapX], 1, '6')); // (BB mod 2 = 0 => Open door) Gittertür geöffnet
                     break;
                 }
 
@@ -113,7 +124,13 @@ public class Player {
     };
 
 
+    private void updateMap() {
 
+        bloodwych.tower.setHexAtMapPos(level, lastX, lastY, replaceAt(bloodwych.tower.levels.get(this.level).map[lastY][lastX], 2, '0'));
+        bloodwych.tower.setHexAtMapPos(level, this.x, this.y, replaceAt(bloodwych.tower.levels.get(this.level).map[this.y][this.x], 2, '8'));
+        this.lastX = this.x;
+        this.lastY = this.y;
+    };
 
 	public void moveForward() {
         if(checkObject(this.view[15])) {
@@ -141,6 +158,7 @@ public class Player {
             this.y = this.y + (1 * yo) - (0 * xo);
             this.x = this.x + (1 * xo) + (0 * yo);
             switchPlayerBackground();
+            updateMap();
         }
 	}
 
@@ -170,6 +188,7 @@ public class Player {
             this.y = this.y - (1 * yo) - (0 * xo);
             this.x = this.x - (1 * xo) + (0 * yo);
             this.switchPlayerBackground();
+            updateMap();
         }
 	}
 
@@ -198,6 +217,7 @@ public class Player {
             this.y = this.y + (1 * yo) - (0 * xo);
             this.x = this.x + (1 * xo) + (0 * yo);
             this.switchPlayerBackground();
+            updateMap();
         }
     }
 
@@ -226,6 +246,7 @@ public class Player {
             this.y = this.y + (1 * yo) - (0 * xo);
             this.x = this.x + (1 * xo) + (0 * yo);
             this.switchPlayerBackground();
+            updateMap();
         }
     }
 
@@ -286,7 +307,8 @@ public class Player {
     public boolean checkObject(String hex) {
 
         //example = 0105 = (Door: last pos = 5, closed: first pos = 0)
-        if (hex.substring(1, 2) == "8") {
+        //second player
+        if (hex.substring(2, 3).equals("8")) {
             return false;
         }
         switch (hex.substring(3, 4)) {

@@ -37,8 +37,8 @@ public class Bloodwych  {
     Tower tower = new Tower();
     int b = 0;
     int scale = 3;
-    Player p1 = new Player(30, 1, 3, 0, 0, 0, this);
-    Player p2 = new Player(14, 22, 3, 0, 400, 0, this);
+    Player p1;
+    Player p2;
     int[][] background = new int[][]{{0, 0, 128, 76, 0, 0}, {128, 0, 128, 76, 0, 0}};
     int[][] gfxPos = new int[][]{{15, 0, 98, 76, 15, 0},
             {0, 0, 15, 76, 0, 0},
@@ -82,6 +82,8 @@ public class Bloodwych  {
     public Bloodwych() throws IOException {
         loadImages();
         loadMap(Maps[0], tower);
+        p1 = new Player(12, 22, 3,0,0,0, this);
+        p2 = new Player(12,23,3,0,400,0,this);
         frame = new BloodwychFrame(this);
         frame.setVisible(true);
         fps = new FPS();
