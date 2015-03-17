@@ -1,7 +1,5 @@
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.util.HashMap;
 
 /**
@@ -418,7 +416,7 @@ public class GraphicsHelper {
 			case 2:return null;
 			case 3: return getMiscObj(BB);
 			case 4:
-				if (BB == 1) {
+				if (BB % 2 == 1) {
 					return bloodwych.gfxStairs[0];
 				} else {
 					return bloodwych.gfxStairs[1];

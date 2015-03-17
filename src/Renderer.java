@@ -10,6 +10,6 @@ public class Renderer {
     }
 
     public void draw() {
-        bloodwych.updateScreen();
+        bloodwych.updatePlayerViewScreen();
     }
 }

@@ -1,6 +1,4 @@
 import javax.imageio.ImageIO;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -82,14 +80,16 @@ public class Bloodwych  {
     public Bloodwych() throws IOException {
         loadImages();
         loadMap(Maps[0], tower);
-        p1 = new Player(12, 22, 3,0,0,0, this);
-        p2 = new Player(12,23,3,0,400,0,this);
+        p1 = new Player(3, 0, 5,3,0,0, this);
+        p2 = new Player(12,23,3,0,410,0,this);
         frame = new BloodwychFrame(this);
         frame.setVisible(true);
         fps = new FPS();
         fps.initialize();
         gameloop = new Main(this);
         gameloop.start();
+        p1.pView(tower.levels.get(p1.level).map);
+        p2.pView(tower.levels.get(p2.level).map);
 
 
     }
@@ -140,11 +140,10 @@ public class Bloodwych  {
 
     }
 
-    void updateScreen() {
-
-        fps.calculate();
+    void updatePlayerViewScreen() {
         p1.pView(tower.levels.get(p1.level).map);
         p2.pView(tower.levels.get(p2.level).map);
+        fps.calculate();
         frame.canvas.render();
         frame.updateStatusLabel(p1, tower.levels.get(p1.level).map, p1.level, Maps[currentMap],fps.getFrameRate());
         frame.repaint();
